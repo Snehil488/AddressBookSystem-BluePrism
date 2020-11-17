@@ -63,6 +63,14 @@
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
+  <subsheet subsheetid="2643a031-8f4f-4a40-afc8-89c3fda897a8" type="Normal" published="False">
+    <name>checking duplicate records</name>
+    <view>
+      <camerax>115</camerax>
+      <cameray>212</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
   <stage stageid="0a03f282-a96a-451b-9cc5-3d1f511e0b5b" name="Start" type="Start">
     <loginhibit />
     <display x="15" y="-105" />
@@ -614,5 +622,197 @@ You will not be able to call this action from a business process, nor will it be
     <initialvalue xml:space="preserve">Johny</initialvalue>
     <private />
     <alwaysinit />
+  </stage>
+  <stage stageid="c236dfb8-d052-4e3c-aa12-57c2841c4436" name="checking duplicate records" type="SubSheetInfo">
+    <subsheetid>2643a031-8f4f-4a40-afc8-89c3fda897a8</subsheetid>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="195e3521-de9e-42c2-a0e6-f8209632dad7" name="Start" type="Start">
+    <subsheetid>2643a031-8f4f-4a40-afc8-89c3fda897a8</subsheetid>
+    <loginhibit />
+    <display x="-15" y="-15" />
+    <onsuccess>a93c1396-3b93-407e-8f0d-956b0d06e2ef</onsuccess>
+  </stage>
+  <stage stageid="0c18e69c-376c-4c6c-8d39-7fa6f05c5bf3" name="End" type="End">
+    <subsheetid>2643a031-8f4f-4a40-afc8-89c3fda897a8</subsheetid>
+    <loginhibit />
+    <display x="-15" y="420" />
+  </stage>
+  <stage stageid="5f36346a-cf12-4754-b1cd-e6923ffa4102" name="Inserting into AddressBook Table" type="Action">
+    <subsheetid>2643a031-8f4f-4a40-afc8-89c3fda897a8</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="60" y="330" />
+    <inputs>
+      <input type="text" name="Query" friendlyname="Query" narrative="The SQL query to use to perform this action" expr="&quot;insert into [BluePrismDB].[dbo].[AddressBook] values&#xA;('&quot;&amp;[Data to Insert.first_name]&amp;&quot;',&#xA;'&quot;&amp;[Data to Insert.last_name]&amp;&quot;',&#xA;'&quot;&amp;[Data to Insert.address]&amp;&quot;',&#xA;'&quot;&amp;[Data to Insert.city]&amp;&quot;',&#xA;'&quot;&amp;[Data to Insert.state]&amp;&quot;',&#xA;&quot;&amp;[Data to Insert.zip]&amp;&quot;,&#xA;'&quot;&amp;[Data to Insert.phone_number]&amp;&quot;',&#xA;'&quot;&amp;[Data to Insert.email]&amp;&quot;')&quot;" />
+    </inputs>
+    <outputs>
+      <output type="flag" name="Success" friendlyname="Success" narrative="Flag indicating success (True) or failure (False)" stage="Success" />
+      <output type="text" name="Message" friendlyname="Message" narrative="Error message giving detail regarding why this action failed" stage="Message" />
+    </outputs>
+    <onsuccess>1fbaff63-ed20-4ab9-bc70-5826d221aee0</onsuccess>
+    <resource object="Data - SQL Server" action="Execute" />
+  </stage>
+  <stage stageid="04975f59-acf2-4d0d-8331-b3efae752616" name="Data to Insert" type="Collection">
+    <subsheetid>2643a031-8f4f-4a40-afc8-89c3fda897a8</subsheetid>
+    <loginhibit />
+    <display x="-180" y="120" />
+    <datatype>collection</datatype>
+    <private />
+    <alwaysinit />
+    <collectioninfo>
+      <field name="first_name" type="text" />
+      <field name="last_name" type="text" />
+      <field name="address" type="text" />
+      <field name="city" type="text" />
+      <field name="zip" type="number" />
+      <field name="phone_number" type="text" />
+      <field name="email" type="text" />
+      <field name="state" type="text" />
+    </collectioninfo>
+    <initialvalue>
+      <row>
+        <field name="first_name" type="text" value="" />
+        <field name="last_name" type="text" value="" />
+        <field name="address" type="text" value="" />
+        <field name="city" type="text" value="" />
+        <field name="zip" type="number" value="" />
+        <field name="phone_number" type="text" value="" />
+        <field name="email" type="text" value="" />
+        <field name="state" type="text" value="" />
+      </row>
+    </initialvalue>
+  </stage>
+  <stage stageid="b3a76f77-8665-4257-b6e2-cf7929d9d798" name="Success" type="Data">
+    <subsheetid>2643a031-8f4f-4a40-afc8-89c3fda897a8</subsheetid>
+    <display x="-180" y="165" />
+    <datatype>flag</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="72e53de6-f040-4026-8eba-84b4e9056429" name="iterate collection to be inserted" type="LoopStart">
+    <subsheetid>2643a031-8f4f-4a40-afc8-89c3fda897a8</subsheetid>
+    <loginhibit />
+    <display x="-15" y="165" />
+    <onsuccess>27dfac63-c95a-482b-b9ea-2049f77b7f41</onsuccess>
+    <groupid>2940f401-e432-47ee-b951-cf0258f30d7b</groupid>
+    <looptype>ForEach</looptype>
+    <loopdata>Data to Insert</loopdata>
+  </stage>
+  <stage stageid="1fbaff63-ed20-4ab9-bc70-5826d221aee0" name="iterate collection to be inserted" type="LoopEnd">
+    <subsheetid>2643a031-8f4f-4a40-afc8-89c3fda897a8</subsheetid>
+    <loginhibit />
+    <display x="-15" y="375" />
+    <onsuccess>0c18e69c-376c-4c6c-8d39-7fa6f05c5bf3</onsuccess>
+    <groupid>2940f401-e432-47ee-b951-cf0258f30d7b</groupid>
+  </stage>
+  <stage stageid="4ed86496-4a13-432c-81fa-c7ee9505939c" name="Message" type="Data">
+    <subsheetid>2643a031-8f4f-4a40-afc8-89c3fda897a8</subsheetid>
+    <display x="-180" y="210" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="f602cffe-df46-49e0-806d-e7e34a5e4626" name="check equality" type="Decision">
+    <subsheetid>2643a031-8f4f-4a40-afc8-89c3fda897a8</subsheetid>
+    <loginhibit />
+    <narrative>checking equality on basis of first name , last name and email because email has to be unique</narrative>
+    <display x="150" y="270" />
+    <decision expression="[Data to Insert.first_name] = [Results.first_name] AND&#xA;[Data to Insert.last_name] = [Results.last_name] AND&#xA;[Data to Insert.email] = [Results.email]" />
+    <ontrue>4df180ad-775d-4657-917c-7b3f173b5668</ontrue>
+    <onfalse>723d1d2e-16b6-410e-8322-5d21fadc2449</onfalse>
+  </stage>
+  <stage stageid="27dfac63-c95a-482b-b9ea-2049f77b7f41" name="Read Operation" type="SubSheet">
+    <subsheetid>2643a031-8f4f-4a40-afc8-89c3fda897a8</subsheetid>
+    <loginhibit />
+    <display x="60" y="210" />
+    <onsuccess>33f79a6c-8cf4-4cea-b89a-8679af4e88aa</onsuccess>
+    <processid>e29df5f6-d3eb-42f5-a9e2-76e555c28e86</processid>
+  </stage>
+  <stage stageid="33f79a6c-8cf4-4cea-b89a-8679af4e88aa" name="iterate collection from database" type="LoopStart">
+    <subsheetid>2643a031-8f4f-4a40-afc8-89c3fda897a8</subsheetid>
+    <loginhibit />
+    <display x="150" y="210" />
+    <onsuccess>f602cffe-df46-49e0-806d-e7e34a5e4626</onsuccess>
+    <groupid>c9bb8a42-9f60-4f37-a4b2-0111b4e8990f</groupid>
+    <looptype>ForEach</looptype>
+    <loopdata>Results</loopdata>
+  </stage>
+  <stage stageid="723d1d2e-16b6-410e-8322-5d21fadc2449" name="iterate collection from database" type="LoopEnd">
+    <subsheetid>2643a031-8f4f-4a40-afc8-89c3fda897a8</subsheetid>
+    <loginhibit />
+    <display x="150" y="330" />
+    <onsuccess>5f36346a-cf12-4754-b1cd-e6923ffa4102</onsuccess>
+    <groupid>c9bb8a42-9f60-4f37-a4b2-0111b4e8990f</groupid>
+  </stage>
+  <stage stageid="4df180ad-775d-4657-917c-7b3f173b5668" name="Record Already Exists Exception" type="Exception">
+    <subsheetid>2643a031-8f4f-4a40-afc8-89c3fda897a8</subsheetid>
+    <display x="255" y="270" w="90" h="30" />
+    <exception localized="yes" type="System" detail="&quot;record already exists in addressbook&quot;" />
+  </stage>
+  <stage stageid="a93c1396-3b93-407e-8f0d-956b0d06e2ef" name="create instance" type="Action">
+    <subsheetid>2643a031-8f4f-4a40-afc8-89c3fda897a8</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="-15" y="30" />
+    <inputs>
+      <input type="flag" name="Enable Events" friendlyname="Enable Events" narrative="Flag to indicate that events should be enabled / disabled on the attached instance - defaulted to True" expr="True" />
+    </inputs>
+    <outputs>
+      <output type="number" name="handle" friendlyname="handle" narrative="An integer which can be used to identify the created instance in subsequent actions" stage="handle" />
+    </outputs>
+    <onsuccess>526d70f4-fe9a-4aa4-9230-f0b8e7dfd5d1</onsuccess>
+    <resource object="MS Excel VBO" action="Create Instance" />
+  </stage>
+  <stage stageid="526d70f4-fe9a-4aa4-9230-f0b8e7dfd5d1" name="open workbook" type="Action">
+    <subsheetid>2643a031-8f4f-4a40-afc8-89c3fda897a8</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="-15" y="75" />
+    <inputs>
+      <input type="number" name="handle" friendlyname="handle" narrative="The integer handle identifying the instance on which the required workbook should be opened. The default of zero indicates the currently active instance." expr="" />
+      <input type="text" name="File name" friendlyname="File name" narrative="The path and name of the file which should be opened." expr="&quot;C:\Users\Snehil\Desktop\AddressBookSystem-BluePrism\Duplicate Contacts.xlsx&quot;" />
+    </inputs>
+    <outputs>
+      <output type="text" name="Workbook Name" friendlyname="Workbook Name" narrative="The name used by Excel to identify the workbook - usually this is the file name (without the path)." stage="Workbook Name" />
+    </outputs>
+    <onsuccess>1487b340-8a61-42fb-b80b-b5b445a54847</onsuccess>
+    <resource object="MS Excel VBO" action="Open Workbook" />
+  </stage>
+  <stage stageid="1487b340-8a61-42fb-b80b-b5b445a54847" name="read as collection" type="Action">
+    <subsheetid>2643a031-8f4f-4a40-afc8-89c3fda897a8</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="-15" y="120" />
+    <inputs>
+      <input type="number" name="handle" friendlyname="handle" narrative="The integer handle identifying the instance on which the worksheet which should be retrieved resides. The default of zero indicates the currently active instance." expr="[handle]" />
+      <input type="text" name="Workbook Name" friendlyname="Workbook Name" narrative="The name of the workbook which contains the sheet required. The default empty text indicates the currently active workbook on the specified instance." expr="[Workbook Name]" />
+      <input type="text" name="Worksheet Name" friendlyname="Worksheet Name" narrative="The name of the worksheet within the specified workbook which should be written to a collection. The default empty text indicates the currently active worksheet within the specified workbook." expr="&quot;Sheet1&quot;" />
+    </inputs>
+    <outputs>
+      <output type="collection" name="Data" friendlyname="Data" narrative="The collection containing the data from the specified worksheet - the column IDs will be gleaned from the first row on the sheet being retrieved." stage="Data to Insert" />
+    </outputs>
+    <onsuccess>72e53de6-f040-4026-8eba-84b4e9056429</onsuccess>
+    <resource object="MS Excel VBO" action="Get Worksheet As Collection" />
+  </stage>
+  <stage stageid="8aa01c43-2b57-4d2f-ae75-57bb48e08925" name="Workbook Name" type="Data">
+    <subsheetid>2643a031-8f4f-4a40-afc8-89c3fda897a8</subsheetid>
+    <display x="-180" y="75" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="227f207d-e079-406e-88ee-b85ee356504d" name="handle" type="Data">
+    <subsheetid>2643a031-8f4f-4a40-afc8-89c3fda897a8</subsheetid>
+    <display x="-180" y="255" />
+    <datatype>number</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="e21a0a35-44da-449e-b14c-2d9745487869" name="Note3" type="Note">
+    <subsheetid>2643a031-8f4f-4a40-afc8-89c3fda897a8</subsheetid>
+    <loginhibit />
+    <narrative>here we intentionally have duplicate data in excel sheet. before inserting each record we are comparing it with all records from database if it matches we are throwing an Exception </narrative>
+    <display x="315" y="120" w="150" h="90" />
   </stage>
 </process>
