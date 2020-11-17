@@ -67,7 +67,15 @@
     <name>checking duplicate records</name>
     <view>
       <camerax>115</camerax>
-      <cameray>212</cameray>
+      <cameray>107</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="28022c88-154a-4c04-94fa-f83e40660d82" type="Normal" published="False">
+    <name>retreive by name</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
@@ -814,5 +822,104 @@ You will not be able to call this action from a business process, nor will it be
     <loginhibit />
     <narrative>here we intentionally have duplicate data in excel sheet. before inserting each record we are comparing it with all records from database if it matches we are throwing an Exception </narrative>
     <display x="315" y="120" w="150" h="90" />
+  </stage>
+  <stage stageid="f5073489-43e7-42c8-b84d-3c7c237c2a9c" name="retreive by name" type="SubSheetInfo">
+    <subsheetid>28022c88-154a-4c04-94fa-f83e40660d82</subsheetid>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="36f5db83-9ab0-4c36-a339-4846b117db33" name="Start" type="Start">
+    <subsheetid>28022c88-154a-4c04-94fa-f83e40660d82</subsheetid>
+    <loginhibit />
+    <display x="15" y="-105" />
+    <onsuccess>72cc94b9-00cb-4f6e-8647-a37e83da8154</onsuccess>
+  </stage>
+  <stage stageid="f25a1243-7536-40b4-83a5-30c6c0027dea" name="End" type="End">
+    <subsheetid>28022c88-154a-4c04-94fa-f83e40660d82</subsheetid>
+    <loginhibit />
+    <display x="15" y="30" />
+  </stage>
+  <stage stageid="72cc94b9-00cb-4f6e-8647-a37e83da8154" name="Set Connection" type="SubSheet">
+    <subsheetid>28022c88-154a-4c04-94fa-f83e40660d82</subsheetid>
+    <loginhibit />
+    <display x="15" y="-60" />
+    <onsuccess>68f61994-ff19-472e-a371-88dfe45fec2a</onsuccess>
+    <processid>d7edf465-9638-415f-946e-50c63d8b9f77</processid>
+  </stage>
+  <stage stageid="68f61994-ff19-472e-a371-88dfe45fec2a" name="Reading AddressBook Table Data" type="Action">
+    <subsheetid>28022c88-154a-4c04-94fa-f83e40660d82</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="15" y="-15" />
+    <inputs>
+      <input type="text" name="SQL" friendlyname="SQL" narrative="The SQL query to use to perform this action" expr="&quot;select * from [BluePrismDB].[dbo].[AddressBook] &#xA;where first_name = '&quot;&amp;[first name]&amp;&quot;' AND last_name = '&quot;&amp;[last name]&amp;&quot;'&quot;" />
+    </inputs>
+    <outputs>
+      <output type="flag" name="Success" friendlyname="Success" narrative="Flag indicating success (True) or failure (False)" stage="Success" />
+      <output type="text" name="Message" friendlyname="Message" narrative="Error message giving detail regarding why this action failed" stage="Message" />
+      <output type="collection" name="Results" friendlyname="Results" narrative="The collection of results from the query" stage="retreived record" />
+    </outputs>
+    <onsuccess>f25a1243-7536-40b4-83a5-30c6c0027dea</onsuccess>
+    <resource object="Data - SQL Server" action="Get Collection" />
+  </stage>
+  <stage stageid="d3081a83-6124-454e-a1d0-94a21c781310" name="retreived record" type="Collection">
+    <subsheetid>28022c88-154a-4c04-94fa-f83e40660d82</subsheetid>
+    <display x="180" y="-75" />
+    <datatype>collection</datatype>
+    <alwaysinit />
+    <collectioninfo>
+      <field name="first_name" type="text" />
+      <field name="last_name" type="text" />
+      <field name="address" type="text" />
+      <field name="city" type="text" />
+      <field name="state" type="text" />
+      <field name="zip" type="text" />
+      <field name="phone_number" type="text" />
+      <field name="email" type="text" />
+    </collectioninfo>
+    <initialvalue>
+      <row>
+        <field name="first_name" type="text" value="" />
+        <field name="last_name" type="text" value="" />
+        <field name="address" type="text" value="" />
+        <field name="city" type="text" value="" />
+        <field name="state" type="text" value="" />
+        <field name="zip" type="text" value="" />
+        <field name="phone_number" type="text" value="" />
+        <field name="email" type="text" value="" />
+      </row>
+    </initialvalue>
+  </stage>
+  <stage stageid="0d4ff516-ef8d-4e4c-b767-985e6d00e26f" name="Success" type="Data">
+    <subsheetid>28022c88-154a-4c04-94fa-f83e40660d82</subsheetid>
+    <display x="180" y="-30" />
+    <datatype>flag</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="f061fc28-5a53-428a-88ef-cb8fd240627f" name="Message" type="Data">
+    <subsheetid>28022c88-154a-4c04-94fa-f83e40660d82</subsheetid>
+    <display x="180" y="15" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="1ea4e214-c9ed-47ed-aeb3-99afceacc4fd" name="first name" type="Data">
+    <subsheetid>28022c88-154a-4c04-94fa-f83e40660d82</subsheetid>
+    <loginhibit />
+    <display x="-165" y="15" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">Shreyas</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="1dff9e21-7dc8-4b5a-b11f-7158acf6e1d7" name="last name" type="Data">
+    <subsheetid>28022c88-154a-4c04-94fa-f83e40660d82</subsheetid>
+    <loginhibit />
+    <display x="-165" y="60" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">Iyer</initialvalue>
+    <private />
+    <alwaysinit />
   </stage>
 </process>
